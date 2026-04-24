@@ -77,4 +77,294 @@
                 </div>
             </div>
 
-            <div class="demo
+            <div class="demo-steps" id="demoSteps"></div>
+
+            <div class="module-overview">
+                <article class="module-card">
+                    <div class="section-badge small-badge">MODULE 01</div>
+                    <h4>信息管理平台</h4>
+                    <p>负责产品资料、标签配置与输入信息管理，是整个平台的起点。</p>
+                </article>
+                <article class="module-card">
+                    <div class="section-badge small-badge">MODULE 02</div>
+                    <h4>社交网络模拟界面</h4>
+                    <p>负责数字分身、关系图谱、帖子投放和评论互动，是多智能体价值的集中展示区。</p>
+                </article>
+                <article class="module-card">
+                    <div class="section-badge small-badge">MODULE 03</div>
+                    <h4>产品分析结果</h4>
+                    <p>负责把分散评论收敛成结构化市场结论，用于答辩展示和产品决策说明。</p>
+                </article>
+            </div>
+
+            <section class="demo-module management-module">
+                <div class="module-header">
+                    <div>
+                        <div class="section-badge small-badge">信息管理平台</div>
+                        <h3>产品信息录入与标签配置</h3>
+                    </div>
+                    <p class="module-description">这一部分单独承担“输入层”职责，强调平台怎么接收和管理产品信息，而不是和互动结果混在一起。</p>
+                </div>
+
+                <div class="demo-panel management-panel">
+                    <div class="form-grid">
+                        <label>
+                            <span>产品名称</span>
+                            <input id="productName" type="text" value="轻果气泡饮">
+                        </label>
+                        <label>
+                            <span>口味</span>
+                            <input id="productFlavor" type="text" value="白桃青柠">
+                        </label>
+                        <label>
+                            <span>含糖量</span>
+                            <input id="productSugar" type="text" value="低糖、轻负担">
+                        </label>
+                        <label>
+                            <span>建议价格</span>
+                            <input id="productPrice" type="text" value="5">
+                        </label>
+                        <label>
+                            <span>包装描述</span>
+                            <input id="productPackaging" type="text" value="粉白渐变细长瓶，强调高颜值">
+                        </label>
+                        <label>
+                            <span>目标受众</span>
+                            <input id="productAudience" type="text" value="年轻女性、学生党、轻健康人群">
+                        </label>
+                    </div>
+
+                    <label class="wide-field">
+                        <span>卖点补充</span>
+                        <textarea id="productHighlights" rows="4">主打果味、低糖、颜值高，适合拍照分享和通勤场景，希望突出健康感与轻松社交属性。</textarea>
+                    </label>
+
+                    <div class="management-meta-grid">
+                        <div class="meta-card">
+                            <strong>产品信息</strong>
+                            <p>产品描述、包装、价格、受众、宣传卖点</p>
+                        </div>
+                        <div class="meta-card">
+                            <strong>画像标签</strong>
+                            <p>年龄、职业、兴趣、消费观念、表达风格</p>
+                        </div>
+                        <div class="meta-card">
+                            <strong>扩展能力</strong>
+                            <p>支持后续接入图片解析、数据库、标签管理后台</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-buttons">
+                        <button class="btn-secondary" id="postBtn">1. 生成帖子</button>
+                        <button class="btn-secondary" id="roundOneBtn">2. 首轮评论</button>
+                        <button class="btn-secondary" id="roundTwoBtn">3. 二轮互动</button>
+                        <button class="btn-primary-small" id="reportBtn">4. 生成分析结果</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="demo-module simulation-module">
+                <div class="module-header">
+                    <div>
+                        <div class="section-badge small-badge">社交网络模拟界面</div>
+                        <h3>数字分身、关系图谱与评论互动</h3>
+                    </div>
+                    <p class="module-description">这一部分单独承担“过程层”职责，把用户池、网络关系、帖子投放和评论碰撞组织成完整的社交模拟区域。</p>
+                </div>
+
+                <div class="simulation-grid">
+                    <section class="demo-panel network-panel">
+                        <div class="panel-header">
+                            <div>
+                                <div class="section-badge small-badge">用户池</div>
+                                <h3>数字分身智能体</h3>
+                            </div>
+                        </div>
+                        <div id="agentGrid" class="agent-grid"></div>
+                    </section>
+
+                    <section class="demo-panel graph-panel">
+                        <div class="panel-header">
+                            <div>
+                                <div class="section-badge small-badge">关系图谱</div>
+                                <h3>社交网络连接</h3>
+                            </div>
+                        </div>
+                        <svg id="networkSvg" viewBox="0 0 340 250" class="network-svg" aria-label="智能体互动图谱"></svg>
+                    </section>
+                </div>
+
+                <div class="simulation-grid simulation-bottom-grid">
+                    <section class="demo-panel post-panel">
+                        <div class="panel-header">
+                            <div>
+                                <div class="section-badge small-badge">帖子生成</div>
+                                <h3>社交帖子投放区</h3>
+                            </div>
+                        </div>
+                        <article id="postCard" class="post-card empty-state">
+                            点击“生成帖子”后，这里会展示产品描述转化后的社交平台帖子。
+                        </article>
+                    </section>
+
+                    <section class="demo-panel feed-panel">
+                        <div class="panel-header">
+                            <div>
+                                <div class="section-badge small-badge">互动流</div>
+                                <h3>评论与辩论过程</h3>
+                            </div>
+                            <span id="feedHint" class="status-badge">等待评论</span>
+                        </div>
+                        <div id="feedList" class="feed-list">
+                            <div class="placeholder-block">
+                                <p>这里展示：</p>
+                                <p>1. 首轮独立评论</p>
+                                <p>2. 二轮互动与观点碰撞</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="demo-module report-module">
+                <div class="module-header">
+                    <div>
+                        <div class="section-badge small-badge">产品分析结果</div>
+                        <h3>市场调研结论、关注点与优化建议</h3>
+                    </div>
+                    <p class="module-description">这一部分单独承担“输出层”职责，把平台前面的输入和互动结果汇总成更完整的分析结果界面。</p>
+                </div>
+
+                <section class="demo-panel report-panel report-panel-wide">
+                    <div class="panel-header">
+                        <div>
+                            <div class="section-badge small-badge">结果输出</div>
+                            <h3>市场调研结论</h3>
+                        </div>
+                        <span id="reportHint" class="status-badge">等待生成</span>
+                    </div>
+                    <div id="reportSummary" class="report-summary">
+                        <div class="placeholder-block">
+                            <p>将输出用户态度、核心关注点、风险提示与优化建议。</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="section-header fade-up">
+            <div class="section-badge">CORE TECH</div>
+            <h2>不是对传统调研的改良，而是<span class="highlight">重构</span></h2>
+            <p>基于三类核心技术协同，让系统既能模拟用户反应，又能解释产品变量如何影响最终决策。</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card fade-up">
+                <div class="icon-wrapper"><i data-lucide="users"></i></div>
+                <h3>多智能体军团</h3>
+                <p>基于用户画像与社交关系构建异质化数字分身，模拟不同圈层消费者在同一场景下的意见差异。</p>
+            </div>
+            <div class="card fade-up">
+                <div class="icon-wrapper"><i data-lucide="heart-pulse"></i></div>
+                <h3>情感计算引擎</h3>
+                <p>注入喜好、犹豫、价格敏感和健康顾虑等情绪线索，避免把所有消费者都抽象成完全理性的角色。</p>
+            </div>
+            <div class="card fade-up">
+                <div class="icon-wrapper"><i data-lucide="git-branch-plus"></i></div>
+                <h3>反事实分析</h3>
+                <p>分析包装、价格、口味和人群表达等变量变化后，可能对市场反馈带来的增减影响。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="section bg-light">
+        <div class="section-header fade-up">
+            <div class="section-badge">PROCESS</div>
+            <h2>研究过程：数小时内形成完整闭环</h2>
+            <p>企业只需输入产品概念，即可完成从帖子生成、评论互动到市场分析结果输出的自动化推演。</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="step-label">STEP 1 · 产品概念输入</div>
+                    <h3>上传产品与卖点信息</h3>
+                    <p>录入包装、价格、风味、目标人群和宣传卖点，为模拟过程提供完整的输入条件。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="step-label">STEP 2 · 虚拟用户池构建</div>
+                    <h3>生成异质化数字分身</h3>
+                    <p>依据不同年龄、职业、兴趣与消费习惯，自动匹配相应的画像标签与表达风格。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="step-label">STEP 3 · 社交传播模拟</div>
+                    <h3>感性反应与网络互动并行</h3>
+                    <p>首轮评论负责表达第一印象，二轮互动负责完成补充、反驳与观点收敛。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="step-label">STEP 4 · 智能优化报告</div>
+                    <h3>输出分析结论与建议</h3>
+                    <p>形成可直接用于汇报的结果页，包括用户总体态度、关注点、风险项与优化建议。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="section dark-section">
+        <div class="section-header fade-up">
+            <div class="section-badge badge-dark">ARCHITECTURE</div>
+            <h2>算得准、懂得深、讲得清</h2>
+            <p>从数据管理到多智能体交互，再到因果化报告输出，构成完整的平台引擎。</p>
+        </div>
+        <div class="cards-grid grid-4">
+            <div class="card dark-card fade-up">
+                <div class="icon-wrapper red"><i data-lucide="database"></i></div>
+                <div class="step-label">LAYER 1</div>
+                <h3>信息管理底座</h3>
+                <p>负责产品信息、用户池、人群标签和输入内容的统一管理。</p>
+            </div>
+            <div class="card dark-card fade-up">
+                <div class="icon-wrapper red"><i data-lucide="cpu"></i></div>
+                <div class="step-label">LAYER 2</div>
+                <h3>多维智能体感知</h3>
+                <p>模拟不同消费者对产品描述、价格与包装的感知差异。</p>
+            </div>
+            <div class="card dark-card fade-up">
+                <div class="icon-wrapper red"><i data-lucide="messages-square"></i></div>
+                <div class="step-label">LAYER 3</div>
+                <h3>协同辩论机制</h3>
+                <p>通过互动、回复和争论，让观点从分散走向更真实的群体共识。</p>
+            </div>
+            <div class="card dark-card fade-up">
+                <div class="icon-wrapper red"><i data-lucide="bar-chart-big"></i></div>
+                <div class="step-label">LAYER 4</div>
+                <h3>因果融合输出</h3>
+                <p>以结构化报告方式输出分析结果，服务产品优化与市场决策。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content fade-up">
+            <h2>打造产品创新的数字孪生伙伴</h2>
+            <p>原有展示结构保持不变，同时新增平台型 Demo，用于更直观地呈现系统输入、过程和输出。</p>
+            <div class="footer-buttons">
+                <button class="btn-dark"><i data-lucide="github"></i> 查看白皮书</button>
+                <button class="btn-primary" data-scroll-target="#platform-demo">体验平台演示</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
