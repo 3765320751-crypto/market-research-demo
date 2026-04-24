@@ -3,75 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>灵境智能·预见者 - 消费者数字孪生平台</title>
+    <title>灵境智能·预见者 - 新品市场试水平台</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="guide-modal-backdrop" id="guideModalBackdrop"></div>
+    <div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+        <button class="guide-close" id="guideClose" aria-label="关闭引导">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="guide-badge">第一次来？先用 20 秒知道它能帮你什么</div>
+        <h2 id="guideTitle">Hi，亲爱的们！我们是一款“新品上线前试水”的智能沙盘</h2>
+        <p class="guide-text">
+            您需要 0 成本、高效率判断一款新品值不值得推吗？
+        </p>
+        <p class="guide-text guide-text-strong">
+            只要把产品信息填进去，这个平台就会告诉你消费者会怎么聊它、会不会买它、会嫌它哪里不合适。
+        </p>
+        <div class="guide-questions">
+            <div class="question-card">
+                <strong>会不会有人愿意第一时间买单？</strong>
+                <p>先看这款新品有没有被市场接住的可能。</p>
+            </div>
+            <div class="question-card">
+                <strong>它最容易被挑剔的地方是什么？</strong>
+                <p>提前发现价格、包装、口味和定位的风险点。</p>
+            </div>
+            <div class="question-card">
+                <strong>宣传时到底该主打哪一句？</strong>
+                <p>从用户讨论里倒推出更打动人的卖点说法。</p>
+            </div>
+        </div>
+        <div class="guide-mini-steps">
+            <div class="guide-step">
+                <span>1</span>
+                <p>填入新品信息</p>
+            </div>
+            <div class="guide-step">
+                <span>2</span>
+                <p>看一轮虚拟讨论</p>
+            </div>
+            <div class="guide-step">
+                <span>3</span>
+                <p>拿走结论和建议</p>
+            </div>
+        </div>
+        <div class="guide-actions">
+            <button class="btn-secondary" id="guideSkip">我先随便逛逛</button>
+            <button class="btn-primary" id="guideStart">带我走一遍示例</button>
+        </div>
+    </div>
+
+    <div class="choice-backdrop" id="demoChoiceBackdrop"></div>
+    <div class="choice-modal" id="demoChoiceModal" role="dialog" aria-modal="true" aria-labelledby="demoChoiceTitle">
+        <button class="guide-close" id="demoChoiceClose" aria-label="关闭选择">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="guide-badge">示例已加载</div>
+        <h2 id="demoChoiceTitle">轻果气泡饮已经放进信息管理平台了</h2>
+        <p class="guide-text">需要我继续完整演示给你看吗？</p>
+        <div class="guide-actions">
+            <button class="btn-secondary" id="demoChoiceNo">先不用，我自己看</button>
+            <button class="btn-primary" id="demoChoiceYes">需要，继续演示</button>
+        </div>
+    </div>
+
+    <div class="choice-backdrop" id="flowChoiceBackdrop"></div>
+    <div class="choice-modal flow-choice-modal" id="flowChoiceModal" role="dialog" aria-modal="true" aria-labelledby="flowChoiceTitle">
+        <button class="guide-close" id="flowChoiceClose" aria-label="关闭流程选择">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="guide-badge">选择你想看的流程</div>
+        <h2 id="flowChoiceTitle">你想直接看哪一块展示？</h2>
+        <div class="flow-choice-grid">
+            <button class="flow-choice-btn" data-flow-step="1">1. 生成帖子</button>
+            <button class="flow-choice-btn" data-flow-step="2">2. 首轮评论</button>
+            <button class="flow-choice-btn" data-flow-step="3">3. 二轮互动</button>
+            <button class="flow-choice-btn flow-choice-btn-primary" data-flow-step="4">4. 生成分析结果</button>
+        </div>
+    </div>
+
+    <button class="floating-guide-btn" id="floatingGuideBtn">
+        <i data-lucide="sparkles"></i>
+        <span>先看大家会不会买单</span>
+    </button>
+
     <nav>
         <div class="logo">
             <i data-lucide="brain-circuit"></i>
             <span>灵境智能·预见者</span>
         </div>
         <div class="nav-links">
+            <a href="#platform-demo">平台 Demo</a>
             <a href="#about">核心技术</a>
             <a href="#process">研究过程</a>
-            <a href="#architecture">诊断引擎</a>
-            <a href="#platform-demo">平台 Demo</a>
+            <a href="#architecture">平台架构</a>
         </div>
-        <button class="btn-primary-small" data-scroll-target="#platform-demo">开始虚拟测试</button>
+        <button class="btn-primary-small" id="navGuideBtn">先看怎么用</button>
     </nav>
 
     <header class="hero fade-up">
-        <div class="badge">用 AI 模拟替代试错</div>
-        <h1>从“猜需求”迈向<span class="highlight">“跑模拟”</span></h1>
+        <div class="hero-kicker">给品牌负责人、产品团队和正在做决策的你用的新品市场试水平台</div>
+        <div class="badge">先别急着上线，先看看市场会不会接住它</div>
+        <h1>用虚拟消费者实现上市前0成本产品调研</h1>
         <p class="subtitle">
-            融合多智能体模拟、情感计算与反事实因果分析，构建可复用的数字消费者平台，
-            让每一款新产品都能在上市前完成一轮可解释的市场预演。
+            这里不是给消费者逛的，而是给你提前判断新品的。
+            你输入产品名称、价格、包装和卖点，平台就会模拟一群不同类型的消费者怎么评论它、讨论它、犹豫它，
+            最后把这些反应整理成一页很直观的产品分析结果。
         </p>
+
+        <div class="hero-question-strip">
+            <div class="hero-question-pill">这款新品，推了会不会有人买？</div>
+            <div class="hero-question-pill">大家会觉得它惊喜，还是只觉得“有点贵”？</div>
+            <div class="hero-question-pill">宣传该讲颜值、低糖，还是讲真好喝？</div>
+        </div>
+
+        <div class="hero-invite-strip">
+            <span class="invite-chip">像试播一条广告前先看反馈</span>
+            <span class="invite-chip">像把新品先丢进一个虚拟评论区</span>
+            <span class="invite-chip">像提前做一轮轻量市场试水</span>
+        </div>
+
+        <div class="hero-product-grid">
+            <section class="hero-story-card">
+                <div class="story-tag">最容易理解的打开方式</div>
+                <h3>假设你明天要推一款“白桃青柠低糖气泡饮”</h3>
+                <p>
+                    你真正想知道的，往往不是技术细节，而是几件特别实际的事：
+                    包装够不够抓眼、价格会不会劝退、低糖会不会被理解成“寡淡”、这波人到底会不会愿意试第一瓶。
+                    这个平台，就是先替你把这些问题试一遍。
+                </p>
+                <div class="story-actions">
+                    <button class="btn-primary" id="loadExampleBtn">一键加载示例</button>
+                    <button class="btn-secondary" id="storyGuideBtn">我还想先看说明</button>
+                </div>
+            </section>
+
+            <aside class="hero-outcome-panel">
+                <div class="panel-kicker">你会很快得到这三种判断</div>
+                <div class="outcome-item">
+                    <i data-lucide="scan-search"></i>
+                    <div>
+                        <strong>这波新品有没有机会被接住</strong>
+                        <p>先摸清市场反应，再决定要不要把预算压上去。</p>
+                    </div>
+                </div>
+                <div class="outcome-item">
+                    <i data-lucide="messages-square"></i>
+                    <div>
+                        <strong>用户会怎么评价、怎么犹豫、怎么互相影响</strong>
+                        <p>不是填问卷，而是更像真实评论区里的讨论过程。</p>
+                    </div>
+                </div>
+                <div class="outcome-item">
+                    <i data-lucide="chart-column-big"></i>
+                    <div>
+                        <strong>最后该改什么、先讲什么</strong>
+                        <p>直接给你可汇报、可决策的分析结果。</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="persona-card-row">
+            <button class="persona-card active" data-persona="brand">
+                <span>如果你是品牌负责人</span>
+                <strong>你更关心这款新品推不推得动</strong>
+            </button>
+            <button class="persona-card" data-persona="product">
+                <span>如果你是产品经理</span>
+                <strong>你更关心先改价格、包装还是卖点</strong>
+            </button>
+            <button class="persona-card" data-persona="operation">
+                <span>如果你是运营或营销</span>
+                <strong>你更关心宣传怎么讲才更容易被接住</strong>
+            </button>
+        </div>
+        <div class="persona-response" id="personaResponse">
+            如果你负责拍板，这个平台最有价值的地方在于：它能先帮你看清这款新品是“可以试着推一下”，还是“现在推上去有点危险”。
+        </div>
 
         <div class="stats-container">
             <div class="stat-box">
                 <div class="stat-number"><span class="counter" data-target="100">0</span><span class="suffix">x</span></div>
-                <div class="stat-label">效率提升（数小时内交付）</div>
+                <div class="stat-label">相对传统调研的效率提升</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number"><span class="counter" data-target="10">0</span><span class="suffix">%</span></div>
-                <div class="stat-label">调研成本占比（降低 90%）</div>
+                <div class="stat-label">相对传统调研的成本占比</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number"><span class="counter" data-target="10">0</span><span class="suffix">万</span></div>
-                <div class="stat-label">智能体并行模拟能力</div>
+                <div class="stat-label">可扩展的虚拟消费者模拟规模</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number"><span class="counter" data-target="91">0</span><span class="suffix">%</span></div>
-                <div class="stat-label">多模态情绪识别准确率</div>
+                <div class="stat-label">情绪与偏好识别能力</div>
             </div>
         </div>
 
         <div class="cta-group">
-            <button class="btn-secondary" data-scroll-target="#platform-demo">查看平台 Demo</button>
-            <button class="btn-primary" data-scroll-target="#about">了解核心技术</button>
+            <button class="btn-primary" data-scroll-target="#platform-demo">现在就去试跑一遍</button>
+            <button class="btn-secondary" data-scroll-target="#quick-start">先用 30 秒看懂流程</button>
         </div>
     </header>
+
+    <section class="section quick-start-section fade-up" id="quick-start">
+        <div class="section-header compact-header">
+            <div class="section-badge">HOW IT WORKS</div>
+            <h2>你可以把它想象成一条很短的“新品试水通道”</h2>
+            <p>别把它想复杂。你负责输入新品信息，平台负责替你模拟一轮市场反应，然后把结论讲清楚。</p>
+        </div>
+        <div class="quick-start-grid">
+            <article class="quick-step-card">
+                <div class="quick-step-index">01</div>
+                <h3>填入新品信息</h3>
+                <p>把名称、价格、包装、口味、目标人群和卖点填进去，告诉平台你到底想试哪款新品。</p>
+            </article>
+            <article class="quick-step-card">
+                <div class="quick-step-index">02</div>
+                <h3>看一轮虚拟讨论</h3>
+                <p>平台会生成不同画像的虚拟消费者，让他们像真实用户一样评论、补充、犹豫和争论。</p>
+            </article>
+            <article class="quick-step-card">
+                <div class="quick-step-index">03</div>
+                <h3>拿走分析结论</h3>
+                <p>最后你会得到一页很直白的结果：大家买不买、最在意什么、最该先改哪里。</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section trust-section fade-up">
+        <div class="section-header compact-header">
+            <div class="section-badge">YOU CAN USE IT TO ANSWER</div>
+            <h2>大多数人第一次点进来，其实就想先知道这三件事</h2>
+        </div>
+        <div class="trust-grid">
+            <article class="trust-card">
+                <strong>这款新品，有没有让人愿意试一口的吸引力？</strong>
+                <p>先看第一反应和整体态度，判断有没有继续推进的必要。</p>
+            </article>
+            <article class="trust-card">
+                <strong>最该先改的是价格、包装，还是表达方式？</strong>
+                <p>从争议和犹豫点里找到优先优化项，而不是靠感觉拍板。</p>
+            </article>
+            <article class="trust-card">
+                <strong>真要去做宣传，应该主打哪句话？</strong>
+                <p>提炼用户真正会被打动的卖点，而不是只写内部自己喜欢的话。</p>
+            </article>
+        </div>
+    </section>
 
     <section id="platform-demo" class="section bg-light">
         <div class="section-header fade-up">
             <div class="section-badge">PLATFORM DEMO</div>
-            <h2>平台演示区</h2>
-            <p>在不改动原有方案展示逻辑的前提下，补充信息管理平台、社交网络模拟界面和产品分析结果界面。</p>
+            <h2>欢迎来到“新品试跑现场”</h2>
+            <p>不用懂智能体也能看懂：先录入产品，再看虚拟消费者怎么讨论，最后直接看分析结果。</p>
         </div>
 
         <div class="platform-demo fade-up">
             <div class="demo-toolbar">
                 <div>
                     <div class="step-label">WORKSPACE</div>
-                    <h3>多智能体市场调研平台</h3>
-                    <p class="demo-toolbar-text">把平台 demo 明确拆成三个独立模块，分别承载信息管理、社交模拟和分析结果展示。</p>
+                    <h3>新品试跑工作台</h3>
+                    <p class="demo-toolbar-text">如果你只想快速看效果，点“给我一个现成示例”或“完整演示”就行，平台会自己带你跑一遍。</p>
                 </div>
                 <div class="demo-actions">
+                    <button class="btn-secondary" id="toolbarExampleBtn">一键加载示例</button>
                     <button class="btn-secondary" id="resetBtn">重置样例</button>
                     <button class="btn-primary-small" id="runDemoBtn">完整演示</button>
                 </div>
@@ -83,30 +284,34 @@
                 <article class="module-card">
                     <div class="section-badge small-badge">MODULE 01</div>
                     <h4>信息管理平台</h4>
-                    <p>负责产品资料、标签配置与输入信息管理，是整个平台的起点。</p>
+                    <p>先把产品信息填进来，让平台知道“这次到底要试哪款新品”。</p>
                 </article>
                 <article class="module-card">
                     <div class="section-badge small-badge">MODULE 02</div>
                     <h4>社交网络模拟界面</h4>
-                    <p>负责数字分身、关系图谱、帖子投放和评论互动，是多智能体价值的集中展示区。</p>
+                    <p>模拟消费者在评论区里怎么聊、怎么犹豫、怎么互相影响判断。</p>
                 </article>
                 <article class="module-card">
                     <div class="section-badge small-badge">MODULE 03</div>
                     <h4>产品分析结果</h4>
-                    <p>负责把分散评论收敛成结构化市场结论，用于答辩展示和产品决策说明。</p>
+                    <p>把零散讨论变成结论，让你直接看得懂、拿得走、讲得清。</p>
                 </article>
             </div>
 
-            <section class="demo-module management-module">
+            <section class="demo-module management-module" id="managementModule">
                 <div class="module-header">
                     <div>
                         <div class="section-badge small-badge">信息管理平台</div>
                         <h3>产品信息录入与标签配置</h3>
                     </div>
-                    <p class="module-description">这一部分单独承担“输入层”职责，强调平台怎么接收和管理产品信息，而不是和互动结果混在一起。</p>
+                    <p class="module-description">这一块就是“把新品交给平台”的地方。信息填得越清楚，后面的模拟越像回事。</p>
                 </div>
 
                 <div class="demo-panel management-panel">
+                    <div class="module-tip">
+                        <i data-lucide="lightbulb"></i>
+                        <p>如果你现在只是想感受一下效果，别急着自己填，先点“给我一个现成示例”。</p>
+                    </div>
                     <div class="form-grid">
                         <label>
                             <span>产品名称</span>
@@ -149,8 +354,8 @@
                             <p>年龄、职业、兴趣、消费观念、表达风格</p>
                         </div>
                         <div class="meta-card">
-                            <strong>扩展能力</strong>
-                            <p>支持后续接入图片解析、数据库、标签管理后台</p>
+                            <strong>可扩展能力</strong>
+                            <p>后续可接入图片解析、数据库、标签管理后台</p>
                         </div>
                     </div>
 
@@ -169,7 +374,7 @@
                         <div class="section-badge small-badge">社交网络模拟界面</div>
                         <h3>数字分身、关系图谱与评论互动</h3>
                     </div>
-                    <p class="module-description">这一部分单独承担“过程层”职责，把用户池、网络关系、帖子投放和评论碰撞组织成完整的社交模拟区域。</p>
+                    <p class="module-description">这一块是最好玩的部分。平台会先发出一条“新品帖子”，再让不同类型的虚拟消费者围着它开始讨论。</p>
                 </div>
 
                 <div class="simulation-grid">
@@ -195,7 +400,7 @@
                 </div>
 
                 <div class="simulation-grid simulation-bottom-grid">
-                    <section class="demo-panel post-panel">
+                    <section class="demo-panel post-panel" id="postPanel">
                         <div class="panel-header">
                             <div>
                                 <div class="section-badge small-badge">帖子生成</div>
@@ -207,7 +412,7 @@
                         </article>
                     </section>
 
-                    <section class="demo-panel feed-panel">
+                    <section class="demo-panel feed-panel" id="feedPanel">
                         <div class="panel-header">
                             <div>
                                 <div class="section-badge small-badge">互动流</div>
@@ -217,7 +422,7 @@
                         </div>
                         <div id="feedList" class="feed-list">
                             <div class="placeholder-block">
-                                <p>这里展示：</p>
+                                <p>这里会依次展示：</p>
                                 <p>1. 首轮独立评论</p>
                                 <p>2. 二轮互动与观点碰撞</p>
                             </div>
@@ -232,10 +437,10 @@
                         <div class="section-badge small-badge">产品分析结果</div>
                         <h3>市场调研结论、关注点与优化建议</h3>
                     </div>
-                    <p class="module-description">这一部分单独承担“输出层”职责，把平台前面的输入和互动结果汇总成更完整的分析结果界面。</p>
+                    <p class="module-description">最后这一块不讲术语，只讲结论。它会直接告诉你：这款新品现在是什么局面，最该优先改哪里。</p>
                 </div>
 
-                <section class="demo-panel report-panel report-panel-wide">
+                <section class="demo-panel report-panel report-panel-wide" id="reportPanel">
                     <div class="panel-header">
                         <div>
                             <div class="section-badge small-badge">结果输出</div>
@@ -256,24 +461,24 @@
     <section id="about" class="section">
         <div class="section-header fade-up">
             <div class="section-badge">CORE TECH</div>
-            <h2>不是对传统调研的改良，而是<span class="highlight">重构</span></h2>
-            <p>基于三类核心技术协同，让系统既能模拟用户反应，又能解释产品变量如何影响最终决策。</p>
+            <h2>技术在后面撑着，但你前面看到的应该是生意判断</h2>
+            <p>底层当然有模型和算法，但对你来说，更重要的是它能不能更快帮你看懂市场、避免错推新品。</p>
         </div>
         <div class="cards-grid">
             <div class="card fade-up">
                 <div class="icon-wrapper"><i data-lucide="users"></i></div>
                 <h3>多智能体军团</h3>
-                <p>基于用户画像与社交关系构建异质化数字分身，模拟不同圈层消费者在同一场景下的意见差异。</p>
+                <p>它不会只给你一个“好或不好”的答案，而是让不同类型的人各说各话，让差异真的显出来。</p>
             </div>
             <div class="card fade-up">
                 <div class="icon-wrapper"><i data-lucide="heart-pulse"></i></div>
                 <h3>情感计算引擎</h3>
-                <p>注入喜好、犹豫、价格敏感和健康顾虑等情绪线索，避免把所有消费者都抽象成完全理性的角色。</p>
+                <p>用户反馈不只是“买不买”，还会带着喜欢、犹豫、价格敏感和健康顾虑一起出现。</p>
             </div>
             <div class="card fade-up">
                 <div class="icon-wrapper"><i data-lucide="git-branch-plus"></i></div>
                 <h3>反事实分析</h3>
-                <p>分析包装、价格、口味和人群表达等变量变化后，可能对市场反馈带来的增减影响。</p>
+                <p>帮你推演“如果我把价格调低一点、把卖点换一句、把包装改一下，结果会不会更好”。</p>
             </div>
         </div>
     </section>
@@ -281,40 +486,40 @@
     <section id="process" class="section bg-light">
         <div class="section-header fade-up">
             <div class="section-badge">PROCESS</div>
-            <h2>研究过程：数小时内形成完整闭环</h2>
-            <p>企业只需输入产品概念，即可完成从帖子生成、评论互动到市场分析结果输出的自动化推演。</p>
+            <h2>它的工作方式，其实就像替你提前跑了一次小型市场</h2>
+            <p>你给出一个产品概念，它会自动从“发出去会怎样”一路推演到“最后该怎么改”。</p>
         </div>
         <div class="timeline">
             <div class="timeline-item fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="step-label">STEP 1 · 产品概念输入</div>
-                    <h3>上传产品与卖点信息</h3>
-                    <p>录入包装、价格、风味、目标人群和宣传卖点，为模拟过程提供完整的输入条件。</p>
+                    <h3>把新品交给系统</h3>
+                    <p>录入包装、价格、风味、目标人群和宣传卖点，平台就知道你这次想试的是什么产品。</p>
                 </div>
             </div>
             <div class="timeline-item fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="step-label">STEP 2 · 虚拟用户池构建</div>
-                    <h3>生成异质化数字分身</h3>
-                    <p>依据不同年龄、职业、兴趣与消费习惯，自动匹配相应的画像标签与表达风格。</p>
+                    <h3>生成一群“会说话”的虚拟消费者</h3>
+                    <p>它会自动生成不同画像的消费者，让反馈不再只是一种声音。</p>
                 </div>
             </div>
             <div class="timeline-item fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="step-label">STEP 3 · 社交传播模拟</div>
-                    <h3>感性反应与网络互动并行</h3>
-                    <p>首轮评论负责表达第一印象，二轮互动负责完成补充、反驳与观点收敛。</p>
+                    <h3>看他们怎么评论、怎么互相影响</h3>
+                    <p>先看第一反应，再看别人互相影响后的变化，结论会比静态问卷更鲜活。</p>
                 </div>
             </div>
             <div class="timeline-item fade-up">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="step-label">STEP 4 · 智能优化报告</div>
-                    <h3>输出分析结论与建议</h3>
-                    <p>形成可直接用于汇报的结果页，包括用户总体态度、关注点、风险项与优化建议。</p>
+                    <h3>拿到最后能直接汇报的结果</h3>
+                    <p>最后出来的是一页很适合管理者看的结果：态度、风险、重点和建议都在里面。</p>
                 </div>
             </div>
         </div>
@@ -323,8 +528,8 @@
     <section id="architecture" class="section dark-section">
         <div class="section-header fade-up">
             <div class="section-badge badge-dark">ARCHITECTURE</div>
-            <h2>算得准、懂得深、讲得清</h2>
-            <p>从数据管理到多智能体交互，再到因果化报告输出，构成完整的平台引擎。</p>
+            <h2>整个平台其实就做三件事：接住输入、模拟反应、说清结论</h2>
+            <p>从信息管理到底层模拟，再到报告输出，目的只有一个：让你更快做出靠谱的新产品判断。</p>
         </div>
         <div class="cards-grid grid-4">
             <div class="card dark-card fade-up">
@@ -356,11 +561,11 @@
 
     <footer>
         <div class="footer-content fade-up">
-            <h2>打造产品创新的数字孪生伙伴</h2>
-            <p>原有展示结构保持不变，同时新增平台型 Demo，用于更直观地呈现系统输入、过程和输出。</p>
+            <h2>不是为了把页面做复杂，而是为了让新品判断这件事更轻松一点</h2>
+            <p>当一个完全不了解智能体的你点进来，也应该第一眼就明白：这是一个帮你提前试市场、少走弯路的平台。</p>
             <div class="footer-buttons">
                 <button class="btn-dark"><i data-lucide="github"></i> 查看白皮书</button>
-                <button class="btn-primary" data-scroll-target="#platform-demo">体验平台演示</button>
+                <button class="btn-primary" data-scroll-target="#platform-demo">去试跑这款新品</button>
             </div>
         </div>
     </footer>

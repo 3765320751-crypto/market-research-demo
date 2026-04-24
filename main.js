@@ -26,7 +26,7 @@ gsap.utils.toArray(".counter").forEach((counter) => {
         { innerHTML: 0 },
         {
             innerHTML: targetValue,
-            duration: 2.5,
+            duration: 2.4,
             ease: "power2.out",
             scrollTrigger: {
                 trigger: counter,
@@ -54,18 +54,40 @@ document.querySelectorAll("[data-scroll-target]").forEach((button) => {
 
 const demoStages = [
     { title: "信息管理", note: "录入产品信息与目标人群" },
-    { title: "帖子生成", note: "将产品转成社交平台帖子" },
-    { title: "社交模拟", note: "触发评论与互动辩论" },
+    { title: "帖子生成", note: "把产品转成社交平台帖子" },
+    { title: "社交模拟", note: "触发评论、互动与争论" },
     { title: "分析结果", note: "输出市场调研结论" },
 ];
 
 const demoAgents = [
-    { name: "校园轻饮派", meta: "20 岁 · 大学生", style: "追颜值、爱分享", tags: ["奶茶平替", "拍照"] },
-    { name: "白领控糖党", meta: "27 岁 · 品牌策划", style: "看成分、看负担", tags: ["轻食", "通勤"] },
-    { name: "理性男生代表", meta: "26 岁 · 程序员", style: "看价格、看回购", tags: ["优惠", "参数对比"] },
-    { name: "健身自律派", meta: "31 岁 · 健身教练", style: "看健康感、看糖分", tags: ["配料表", "运动后"] },
-    { name: "宝妈家庭型", meta: "34 岁 · 团购团长", style: "考虑家庭场景", tags: ["囤货", "家庭消费"] },
-    { name: "潮流美妆生", meta: "23 岁 · 美妆博主", style: "看包装与话题性", tags: ["种草", "颜值"] },
+    { name: "校园轻饮派", meta: "20 岁 · 大学生", style: "追颜值、爱分享", tags: ["拍照", "新口味"] },
+    { name: "白领控糖党", meta: "27 岁 · 品牌策划", style: "看成分、看负担", tags: ["低糖", "通勤"] },
+    { name: "理性男生代表", meta: "26 岁 · 程序员", style: "看价格、看回购", tags: ["性价比", "复购"] },
+    { name: "健身自律派", meta: "31 岁 · 健身教练", style: "看健康感与糖分", tags: ["运动", "配料表"] },
+    { name: "家庭消费派", meta: "34 岁 · 团购团长", style: "看家庭场景", tags: ["囤货", "家庭消费"] },
+    { name: "种草分享派", meta: "23 岁 · 美妆博主", style: "看包装与话题度", tags: ["颜值", "社交传播"] },
+];
+
+const personaCopy = {
+    brand: "如果你负责拍板，这个平台最有价值的地方在于：它能先帮你看清这款新品是“可以试着推一下”，还是“现在推上去有点危险”。",
+    product: "如果你负责产品，这个平台最有用的地方在于：它会提醒你先动哪里最划算，是价格、包装、口味，还是卖点表达。",
+    operation: "如果你负责运营或营销，这个平台最有意思的地方在于：你能先看到用户会被哪句话打动，又会在哪句话面前犹豫。",
+};
+
+const examplePreset = {
+    name: "轻果气泡饮",
+    flavor: "白桃青柠",
+    sugar: "低糖、轻负担",
+    price: "5",
+    packaging: "粉白渐变细长瓶，强调高颜值",
+    audience: "年轻女性、学生党、轻健康人群",
+    highlights: "主打果味、低糖、颜值高，适合拍照分享和通勤场景，希望突出健康感与轻松社交属性。",
+};
+
+const floatingIdeas = [
+    "先看大家会不会买单",
+    "先看他们会挑剔哪里",
+    "先看宣传该怎么说",
 ];
 
 const demoState = {
@@ -85,38 +107,69 @@ function getProductData() {
     };
 }
 
+function fillExamplePreset() {
+    document.getElementById("productName").value = examplePreset.name;
+    document.getElementById("productFlavor").value = examplePreset.flavor;
+    document.getElementById("productSugar").value = examplePreset.sugar;
+    document.getElementById("productPrice").value = examplePreset.price;
+    document.getElementById("productPackaging").value = examplePreset.packaging;
+    document.getElementById("productAudience").value = examplePreset.audience;
+    document.getElementById("productHighlights").value = examplePreset.highlights;
+}
+
+function clearProductData() {
+    document.getElementById("productName").value = "";
+    document.getElementById("productFlavor").value = "";
+    document.getElementById("productSugar").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productPackaging").value = "";
+    document.getElementById("productAudience").value = "";
+    document.getElementById("productHighlights").value = "";
+}
+
 function buildDemoSimulation() {
     const product = getProductData();
+    const priceValue = Number(product.price) || 5;
+    const positive = priceValue <= 5 ? 62 : 48;
+    const negative = priceValue <= 5 ? 13 : 22;
+    const neutral = 100 - positive - negative;
     return {
         post: {
-            body: `新出了一款 ${product.flavor} 风味的 ${product.name}，主打 ${product.sugar}，包装为 ${product.packaging}。目标人群锁定 ${product.audience}，建议零售价约 ${product.price} 元。${product.highlights} 大家会买吗？`,
+            body: `新出了一款 ${product.flavor} 风味的 ${product.name}，主打 ${product.sugar}，包装是 ${product.packaging}。目标受众锁定 ${product.audience}，建议零售价约 ${product.price} 元。${product.highlights} 你会买吗？`,
             tags: ["新品试水", "用户共创", "社交讨论", "市场调研"],
         },
         comments: [
-            { type: "comment", name: "校园轻饮派", meta: "20 岁 · 大学生", sentiment: "positive", text: "包装很有记忆点，如果线下陈列好看，我愿意为了这个口味先买一瓶试试。" },
-            { type: "comment", name: "白领控糖党", meta: "27 岁 · 品牌策划", sentiment: "positive", text: "低糖表达对我有吸引力，但还是要继续看口味完成度和成分信息。" },
-            { type: "comment", name: "理性男生代表", meta: "26 岁 · 程序员", sentiment: "neutral", text: "我更看价格和复购逻辑，如果只是好看，不一定能长期买单。" },
-            { type: "comment", name: "宝妈家庭型", meta: "34 岁 · 团购团长", sentiment: "neutral", text: "如果面向家庭场景的表达再明确一点，购买理由会更充分。" },
-            { type: "reply", name: "社交媒体观察者", meta: "回应 理性男生代表", sentiment: "neutral", text: "这类产品前期靠颜值有传播力，但后续必须补上价格和场景理由。" },
-            { type: "reply", name: "健身自律派", meta: "回应 白领控糖党", sentiment: "positive", text: "低糖是入场券，如果能强调“轻负担但不寡淡”，转化会更稳。" },
+            { type: "comment", name: "校园轻饮派", meta: "20 岁 · 大学生", sentiment: "positive", text: "包装很容易让人记住，如果线下陈列好看，我会愿意先为了这个口味买一瓶试试。" },
+            { type: "comment", name: "白领控糖党", meta: "27 岁 · 品牌策划", sentiment: "positive", text: "低糖这个表达对我有吸引力，但我还是会继续看口味完成度和成分信息。" },
+            { type: "comment", name: "理性男生代表", meta: "26 岁 · 程序员", sentiment: priceValue <= 5 ? "neutral" : "negative", text: priceValue <= 5 ? "如果价格控制住，尝鲜门槛不高，我会考虑顺手买一瓶。" : "这个价格有点高了，如果只是颜值好看，长期回购的理由还不够。" },
+            { type: "comment", name: "家庭消费派", meta: "34 岁 · 团购团长", sentiment: "neutral", text: "如果面向家庭或办公室场景的表达再明确一点，购买理由会更充分。" },
+            { type: "reply", name: "社交媒体观察者", meta: "回应 理性男生代表", sentiment: "neutral", text: "这类产品前期靠颜值会有传播力，但后续还是得补上价格和场景理由。" },
+            { type: "reply", name: "健身自律派", meta: "回应 白领控糖党", sentiment: "positive", text: "低糖是入场券，如果能强调“轻负担但不寡淡”，转化会更稳一些。" },
+            { type: "reply", name: "种草分享派", meta: "回应 校园轻饮派", sentiment: "positive", text: "这款如果视觉拍出来够好看，很适合先在社交平台上被种草。" },
         ],
         report: {
-            sentiment: { positive: 57, neutral: 28, negative: 15 },
+            sentiment: { positive, neutral, negative },
             focusItems: [
                 { name: "包装颜值", percent: 78 },
-                { name: "价格敏感度", percent: 66 },
-                { name: "低糖健康感", percent: 61 },
-                { name: "人群匹配度", percent: 48 },
+                { name: "价格敏感度", percent: priceValue <= 5 ? 58 : 72 },
+                { name: "低糖健康感", percent: 64 },
+                { name: "人群匹配度", percent: 52 },
             ],
+            highlight: "这款产品具备较强的第一眼吸引力，尤其在颜值和低糖标签上容易被年轻用户注意到，但价格和长期回购理由仍需要补充得更扎实。",
+            decision: {
+                verdict: priceValue <= 5 ? "适合小范围试水首发" : "建议优化后再推向市场",
+                priority: priceValue <= 5 ? "优先补强使用场景和复购理由" : "优先优化定价和购买理由",
+                risk: priceValue <= 5 ? "过度依赖颜值传播，后期可能转化不足" : "价格高于尝鲜心理预期，容易被劝退",
+            },
             conclusions: [
                 "包装和颜色是最容易引发首轮讨论的卖点。",
                 "低糖标签带来较高好感度，但用户仍会追问真实口味是否足够好喝。",
-                "价格决定产品能否从尝鲜走向复购。",
+                "价格决定产品能否从尝鲜走向复购，尤其影响理性用户和家庭场景用户。",
             ],
             suggestions: [
-                "建议将首发价格控制在 5 元以内或给出组合优惠。",
-                "补充通勤、午后和轻社交等更普适的消费场景。",
-                "强化“低糖不牺牲风味”的表达，降低用户对口味寡淡的预设。",
+                priceValue <= 5 ? "建议维持 5 元内的尝鲜门槛，结合渠道活动提升首发转化。" : "建议把尝鲜价控制在 5 元左右，或搭配组合优惠降低首次购买阻力。",
+                "补充通勤、午后和轻社交等更普适的消费场景表达。",
+                "强化“低糖但不牺牲风味”的卖点，减少用户对口味寡淡的预设。",
             ],
         },
     };
@@ -165,13 +218,13 @@ function renderDemoNetwork() {
         [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 0],
         [1, 9], [9, 11], [11, 5], [2, 10], [10, 11], [7, 11], [6, 9],
     ];
-    const colors = ["#16836f", "#16836f", "#16836f", "#16836f", "#16836f", "#16836f", "#16836f", "#16836f", "#8f837c", "#16836f", "#16836f", "#16836f"];
+    const colors = ["#ff2a4d", "#16836f", "#8f837c", "#ff2a4d", "#16836f", "#ff2a4d", "#8f837c", "#16836f", "#ff2a4d", "#8f837c", "#16836f", "#ff2a4d"];
     const svg = document.getElementById("networkSvg");
     const lineMarkup = links
         .map(([from, to]) => {
             const [x1, y1] = points[from];
             const [x2, y2] = points[to];
-            return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.16)" stroke-width="2"></line>`;
+            return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.12)" stroke-width="2"></line>`;
         })
         .join("");
     const nodeMarkup = points
@@ -236,8 +289,22 @@ function renderDemoReport() {
     const report = demoState.simulation.report;
     document.getElementById("reportHint").textContent = "分析结果已生成";
     document.getElementById("reportSummary").innerHTML = `
+        <section class="report-hero">
+            <div class="report-highlight">
+                <h4>一句大白话结论</h4>
+                <p>${report.highlight}</p>
+            </div>
+            <div class="report-decision">
+                <h4>如果你现在要拍板</h4>
+                <p>${report.decision.verdict}</p>
+                <div class="decision-tag-row">
+                    <span class="decision-tag">先做：${report.decision.priority}</span>
+                    <span class="decision-tag">注意：${report.decision.risk}</span>
+                </div>
+            </div>
+        </section>
         <section class="report-block">
-            <h4>用户总体态度</h4>
+            <h4>大家整体是什么态度</h4>
             <div class="bar-group">
                 ${[
                     ["正面", report.sentiment.positive, "positive"],
@@ -253,7 +320,7 @@ function renderDemoReport() {
             </div>
         </section>
         <section class="report-block">
-            <h4>核心关注点</h4>
+            <h4>大家最在意什么</h4>
             <div class="focus-grid">
                 ${report.focusItems.map((item) => `
                     <div class="focus-item">
@@ -264,13 +331,13 @@ function renderDemoReport() {
             </div>
         </section>
         <section class="report-block">
-            <h4>调研结论</h4>
+            <h4>从讨论里能看出的几件事</h4>
             <div class="list-stack">
                 ${report.conclusions.map((item) => `<div class="list-item">${item}</div>`).join("")}
             </div>
         </section>
         <section class="report-block">
-            <h4>优化建议</h4>
+            <h4>下一步更建议你这样做</h4>
             <div class="list-stack">
                 ${report.suggestions.map((item) => `<div class="list-item">${item}</div>`).join("")}
             </div>
@@ -290,7 +357,7 @@ function resetDemo() {
     document.getElementById("postCard").textContent = "点击“生成帖子”后，这里会展示产品描述转化后的社交平台帖子。";
     document.getElementById("feedList").innerHTML = `
         <div class="placeholder-block">
-            <p>这里展示：</p>
+            <p>这里会依次展示：</p>
             <p>1. 首轮独立评论</p>
             <p>2. 二轮互动与观点碰撞</p>
         </div>
@@ -302,55 +369,203 @@ function resetDemo() {
     `;
 }
 
-document.getElementById("postBtn").addEventListener("click", () => {
-    demoState.simulation = buildDemoSimulation();
-    demoState.stage = 1;
-    renderDemoSteps();
-    renderDemoPost();
-});
+function scrollToBlock(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-document.getElementById("roundOneBtn").addEventListener("click", () => {
-    demoState.simulation = buildDemoSimulation();
-    demoState.stage = 2;
-    renderDemoSteps();
-    renderDemoPost();
-    renderDemoFeed(false);
-});
+function openChoiceModal(modalId, backdropId) {
+    document.body.classList.add("modal-open");
+    document.getElementById(modalId).classList.add("visible");
+    document.getElementById(backdropId).classList.add("visible");
+}
 
-document.getElementById("roundTwoBtn").addEventListener("click", () => {
-    demoState.simulation = buildDemoSimulation();
-    demoState.stage = 2;
-    renderDemoSteps();
-    renderDemoPost();
-    renderDemoFeed(true);
-});
+function closeChoiceModal(modalId, backdropId) {
+    document.getElementById(modalId).classList.remove("visible");
+    document.getElementById(backdropId).classList.remove("visible");
+    if (!document.querySelector(".guide-modal.visible") && !document.querySelector(".choice-modal.visible")) {
+        document.body.classList.remove("modal-open");
+    }
+}
 
-document.getElementById("reportBtn").addEventListener("click", () => {
+function closeAllChoiceModals() {
+    closeChoiceModal("demoChoiceModal", "demoChoiceBackdrop");
+    closeChoiceModal("flowChoiceModal", "flowChoiceBackdrop");
+}
+
+function openGuideModal() {
+    document.body.classList.add("modal-open");
+    document.getElementById("guideModal").classList.add("visible");
+    document.getElementById("guideModalBackdrop").classList.add("visible");
+}
+
+function closeGuideModal() {
+    document.body.classList.remove("modal-open");
+    document.getElementById("guideModal").classList.remove("visible");
+    document.getElementById("guideModalBackdrop").classList.remove("visible");
+    sessionStorage.setItem("market-demo-guide-seen", "1");
+}
+
+function runStage(step) {
     demoState.simulation = buildDemoSimulation();
+
+    if (step === 1) {
+        demoState.stage = 1;
+        renderDemoSteps();
+        renderDemoPost();
+        scrollToBlock("postPanel");
+        return;
+    }
+
+    if (step === 2) {
+        demoState.stage = 2;
+        renderDemoSteps();
+        renderDemoPost();
+        renderDemoFeed(false);
+        scrollToBlock("feedPanel");
+        return;
+    }
+
+    if (step === 3) {
+        demoState.stage = 2;
+        renderDemoSteps();
+        renderDemoPost();
+        renderDemoFeed(true);
+        scrollToBlock("feedPanel");
+        return;
+    }
+
     demoState.stage = 3;
     renderDemoSteps();
     renderDemoPost();
     renderDemoFeed(true);
     renderDemoReport();
+    scrollToBlock("reportPanel");
+}
+
+function loadExampleAndPrompt() {
+    fillExamplePreset();
+    resetDemo();
+    scrollToBlock("managementModule");
+    window.setTimeout(() => {
+        openChoiceModal("demoChoiceModal", "demoChoiceBackdrop");
+    }, 380);
+}
+
+function bindGuideActions() {
+    const openButtons = [
+        document.getElementById("navGuideBtn"),
+        document.getElementById("storyGuideBtn"),
+        document.getElementById("floatingGuideBtn"),
+    ];
+    openButtons.forEach((button) => button?.addEventListener("click", openGuideModal));
+
+    document.getElementById("guideClose").addEventListener("click", closeGuideModal);
+    document.getElementById("guideSkip").addEventListener("click", closeGuideModal);
+    document.getElementById("guideModalBackdrop").addEventListener("click", closeGuideModal);
+    document.getElementById("guideStart").addEventListener("click", () => {
+        closeGuideModal();
+        loadExampleAndPrompt();
+    });
+
+    if (!sessionStorage.getItem("market-demo-guide-seen")) {
+        window.setTimeout(openGuideModal, 650);
+    }
+}
+
+function bindPersonaCards() {
+    document.querySelectorAll(".persona-card").forEach((card) => {
+        card.addEventListener("click", () => {
+            document.querySelectorAll(".persona-card").forEach((item) => item.classList.remove("active"));
+            card.classList.add("active");
+            const key = card.getAttribute("data-persona");
+            document.getElementById("personaResponse").textContent = personaCopy[key];
+        });
+    });
+}
+
+function bindExampleButtons() {
+    [document.getElementById("loadExampleBtn"), document.getElementById("toolbarExampleBtn")].forEach((button) => {
+        button?.addEventListener("click", loadExampleAndPrompt);
+    });
+}
+
+function bindChoiceModals() {
+    document.getElementById("demoChoiceClose").addEventListener("click", () => closeChoiceModal("demoChoiceModal", "demoChoiceBackdrop"));
+    document.getElementById("demoChoiceBackdrop").addEventListener("click", () => closeChoiceModal("demoChoiceModal", "demoChoiceBackdrop"));
+    document.getElementById("demoChoiceNo").addEventListener("click", () => closeChoiceModal("demoChoiceModal", "demoChoiceBackdrop"));
+    document.getElementById("demoChoiceYes").addEventListener("click", () => {
+        closeChoiceModal("demoChoiceModal", "demoChoiceBackdrop");
+        openChoiceModal("flowChoiceModal", "flowChoiceBackdrop");
+    });
+
+    document.getElementById("flowChoiceClose").addEventListener("click", () => closeChoiceModal("flowChoiceModal", "flowChoiceBackdrop"));
+    document.getElementById("flowChoiceBackdrop").addEventListener("click", () => closeChoiceModal("flowChoiceModal", "flowChoiceBackdrop"));
+    document.querySelectorAll("[data-flow-step]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const step = Number(button.getAttribute("data-flow-step"));
+            closeChoiceModal("flowChoiceModal", "flowChoiceBackdrop");
+            runStage(step);
+        });
+    });
+}
+
+function rotateGuideButtonCopy() {
+    const button = document.getElementById("floatingGuideBtn");
+    const label = button?.querySelector("span");
+    if (!label) return;
+    let index = 0;
+    window.setInterval(() => {
+        index = (index + 1) % floatingIdeas.length;
+        label.textContent = floatingIdeas[index];
+    }, 3600);
+}
+
+document.getElementById("postBtn").addEventListener("click", () => runStage(1));
+document.getElementById("roundOneBtn").addEventListener("click", () => runStage(2));
+document.getElementById("roundTwoBtn").addEventListener("click", () => runStage(3));
+document.getElementById("reportBtn").addEventListener("click", () => runStage(4));
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+    clearProductData();
+    closeAllChoiceModals();
+    resetDemo();
+    scrollToBlock("managementModule");
 });
 
-document.getElementById("runDemoBtn").addEventListener("click", async () => {
+document.getElementById("runDemoBtn").addEventListener("click", () => {
     demoState.simulation = buildDemoSimulation();
-    demoState.stage = 1;
-    renderDemoSteps();
     renderDemoPost();
-    await new Promise((resolve) => setTimeout(resolve, 240));
-    demoState.stage = 2;
-    renderDemoSteps();
-    renderDemoFeed(false);
-    await new Promise((resolve) => setTimeout(resolve, 240));
-    renderDemoFeed(true);
-    await new Promise((resolve) => setTimeout(resolve, 240));
-    demoState.stage = 3;
-    renderDemoSteps();
-    renderDemoReport();
+
+    window.setTimeout(() => {
+        demoState.stage = 1;
+        renderDemoSteps();
+        scrollToBlock("postPanel");
+    }, 180);
+
+    window.setTimeout(() => {
+        demoState.stage = 2;
+        renderDemoSteps();
+        renderDemoFeed(false);
+        scrollToBlock("feedPanel");
+    }, 880);
+
+    window.setTimeout(() => {
+        renderDemoFeed(true);
+    }, 1680);
+
+    window.setTimeout(() => {
+        demoState.stage = 3;
+        renderDemoSteps();
+        renderDemoReport();
+        scrollToBlock("reportPanel");
+    }, 2480);
 });
 
-document.getElementById("resetBtn").addEventListener("click", resetDemo);
-
+fillExamplePreset();
 resetDemo();
+bindGuideActions();
+bindPersonaCards();
+bindExampleButtons();
+bindChoiceModals();
+rotateGuideButtonCopy();
+lucide.createIcons();
